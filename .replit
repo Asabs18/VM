@@ -1,0 +1,2 @@
+language = "C++"
+run = "clang++-7 -pthread -std=c++17 -lm -o main main.cpp src/*.cpp UT/src/*.cpp µnit/*.cpp && ./main"
