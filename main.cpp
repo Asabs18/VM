@@ -3,7 +3,6 @@
 //  _UT_:   call VM's µnit main()
 //  _MU_:   call µnit/example.cpp: main()
 //
-#define _UT_
 //
 // Main entry points:
 //  VM to ASM translator UTs
