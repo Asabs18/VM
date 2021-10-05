@@ -1,3 +1,3 @@
-#include "../../µnit/munit_ex.h"
+#include "../../munit/munit_ex.h"
 
 extern MunitTest token_tests[];
