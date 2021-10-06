@@ -35,3 +35,6 @@
 # MSVC leftovers
 *.ilk   # incremental linker
 *.pdb   # program database
+obj/vc140.pdb
+obj/main.pdb
+obj/main.ilk
