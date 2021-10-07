@@ -33,6 +33,7 @@
 *.app
 
 # MSVC leftovers
+obj/*
 *.ilk   # incremental linker
 *.pdb   # program database
 obj/main.ilk
