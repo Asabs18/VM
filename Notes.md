@@ -3,6 +3,9 @@
     - see 'djg'
 - Changed name of `µnit\example.c` to `.cpp` so `repl.it` would build
     - see 'djg'
+- numerous structural and naming changes to enable VS Code support
+	- µnit ➡️ munit
+	- **HACK**: `main()` *files* renamed to avoid object file name clashes - weak solution
 
 
 # Tokenizer:

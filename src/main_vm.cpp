@@ -9,11 +9,11 @@
 
 int main_vm(int argc, char* argv[]) {
     // [Range-based for loop (since C++11) - cppreference.com](https://en.cppreference.com/w/cpp/language/range-for)
-    for (const auto& reserved_token : reserved_instruction_token_map) {
+    for (const auto& reserved_token : reserved_instruction_terminal_map) {
         std::cout << reserved_token.first << std::endl;
     }
     std::cout << "---" << std::endl;
-    for (const auto& reserved_token : reserved_memory_segment_token_map) {
+    for (const auto& reserved_token : reserved_memory_segment_terminal_map) {
         std::cout << reserved_token.first << std::endl;
     }
     return EXIT_SUCCESS;

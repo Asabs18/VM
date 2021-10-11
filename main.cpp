@@ -1,3 +1,4 @@
+#include <cassert>
 // `main()` driver program:
 //  _VM_:   call VM's main()
 //  _UT_:   call VM's µnit main()
@@ -20,6 +21,7 @@ int main(int argc, char* argv[]) {
 #elif defined(_MU_)
     return main_munit_example(argc, argv);
 #else
-    #error Undefined main().
+    #pragma message("***\n*** Undefined main()\n***\n")
+    assert(false);
 #endif // _UT_
 }

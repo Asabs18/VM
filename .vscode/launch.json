@@ -10,7 +10,7 @@
             "request": "launch",
             // "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "program": "obj\\${fileBasenameNoExtension}.exe",
-            "args": [],
+            "args": ["--color", "always"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
