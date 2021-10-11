@@ -1,2 +1,2 @@
 language = "C++"
-run = "clang++-7 -D_UT_ -pthread -std=c++17 -lm -o main main.cpp src/*.cpp UT/src/*.cpp µnit/*.cpp && ./main"
+run = "clang++-7 -D_UT_ -pthread -std=c++17 -lm -o obj/main main.cpp src/*.cpp UT/src/*.cpp munit/*.cpp && obj/main"
