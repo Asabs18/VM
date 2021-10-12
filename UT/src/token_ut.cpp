@@ -60,6 +60,29 @@ invalid_cast_number_token(const MunitParameter params[], void* data) {
 	munit_assert(terminal == terminals_t::ts_number);
 	return MUNIT_OK;
 }
+static MunitResult
+get_terminal_token(const MunitParameter params[], void* data) {
+	//Arrange
+	token_t token(terminals_t::ms_local, 0, 0);
+	//Act
+	const terminals_t* terminal = token.get_terminal();
+	//Assert
+	munit_assert(*terminal == terminals_t::ms_local);
+
+	return MUNIT_OK;
+}
+static MunitResult
+get_invalid_number_token(const MunitParameter params[], void* data) {
+	//Arrange
+	token_t token({ number_t{1234} }, 0, 0);
+	const terminals_t* terminal = reinterpret_cast<const terminals_t*>(0xDEADBEEF);
+	//Act
+  terminal = token.get_terminal();
+	//Assert
+  munit_assert_ptr_equal(terminal, nullptr);
+
+	return MUNIT_OK;
+}
 
 //declares the test suite to run each test in this file
 MunitTest token_t_tests[] = {
@@ -68,5 +91,7 @@ MunitTest token_t_tests[] = {
 	munit_ex_register_test(create_label_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
 	munit_ex_register_test(cast_terminal_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
 	munit_ex_register_test(invalid_cast_number_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
+	munit_ex_register_test(get_terminal_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
+	munit_ex_register_test(get_invalid_number_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
 	{ NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
 };
