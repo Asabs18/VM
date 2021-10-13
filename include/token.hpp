@@ -1,108 +1,68 @@
 #pragma once
-// TODO: add header guard
 #include <string>
 #include <variant>
 #include "lookup.hpp"
+// [chapter 7 lecture.pdf - Google Drive](https://drive.google.com/file/d/19fe1PeGnggDHymu4LlVY08KmDdhMVRpm/view)
+// Memory Segments:
+// 	- Slide 63
+// Arithmetic / Logical commands
+// Memory access commands
+// Branching commands
+// Function commands
+// 	- Slide 82
+// Other Terminal Symbols:
+// 	- number (number_t)
+//	- symbol (symbol_t)
 
-//  [chapter 7 lecture.pdf - Google Drive](https://drive.google.com/file/d/19fe1PeGnggDHymu4LlVY08KmDdhMVRpm/view)
-//
 // [Replacing text macros - cppreference.com](https://en.cppreference.com/w/c/preprocessor/replace)
 //  Search for: ""
-#define DEFINE_TERMINAL(prefix, terminal)               \
-    prefix##_##terminal
-//
-// namespace VM {
-//
-enum struct terminals_t {
-	//
-	// Memory Segments:
-	//  Slide 63
-	//TODO: remove block comments?
-	/*
-		local
-		argument
-		this
-		that
-		constant
-		static
-		pointer
-		temp
-	*/
-	DEFINE_TERMINAL(ms, local),
-	DEFINE_TERMINAL(ms, argument),
-	DEFINE_TERMINAL(ms, this),
-	DEFINE_TERMINAL(ms, that),
-	DEFINE_TERMINAL(ms, constant),
-	DEFINE_TERMINAL(ms, static),
-	DEFINE_TERMINAL(ms, pointer),
-	DEFINE_TERMINAL(ms, temp),
-	//
-	// Arithmetic / Logical commands
-	//  Slide 82
-	/*
-		add
-		sub
-		neg
-		eq
-		get
-		lt
-		and
-		or
-		not
-	*/
-	DEFINE_TERMINAL(al, add),
-	DEFINE_TERMINAL(al, sub),
-	DEFINE_TERMINAL(al, neg),
-	DEFINE_TERMINAL(al, eq),
-	DEFINE_TERMINAL(al, get),
-	DEFINE_TERMINAL(al, lt),
-	DEFINE_TERMINAL(al, and),
-	DEFINE_TERMINAL(al, or ),
-	DEFINE_TERMINAL(al, not),
-	//
-	// Memory access commands
-	//  Slide 82
-	/*
-		pop
-		push
-	*/
-	DEFINE_TERMINAL(ma, pop),
-	DEFINE_TERMINAL(ma, push),
-	//
-	// Branching commands
-	//  Slide 82
-	/*
-		label
-		goto
-		if-goto
-	*/
-	DEFINE_TERMINAL(bc, label),
-	DEFINE_TERMINAL(bc, goto),
-	DEFINE_TERMINAL(bc, if_goto),    // if-goto
-	//
-	// Function commands
-	//  Slide 82
-	/*
-		function
-		call
-		return
-	*/
-	DEFINE_TERMINAL(fc, function),
-	DEFINE_TERMINAL(fc, call),
-	DEFINE_TERMINAL(fc, return),
-	//
-	// Other Terminal Symbols:
-	//	- number (number_t)
-	//	- symbol (symbol_t)
-	//
-	DEFINE_TERMINAL(ts, number),
-	DEFINE_TERMINAL(ts, symbol)
+#define TOKENS_TABLE(DEFINE_TOKEN)						\
+	DEFINE_TOKEN(ms, local, local)						\
+	DEFINE_TOKEN(ms, argument, argument)    			\
+	DEFINE_TOKEN(ms, this, this)				    	\
+	DEFINE_TOKEN(ms, that, that) 					    \
+	DEFINE_TOKEN(ms, constant, constant) 				\
+	DEFINE_TOKEN(ms, static, static) 					\
+	DEFINE_TOKEN(ms, pointer, pointer) 					\
+	DEFINE_TOKEN(ms, temp, temp) 						\
+	DEFINE_TOKEN(al, add, add) 							\
+	DEFINE_TOKEN(al, sub, sub) 							\
+	DEFINE_TOKEN(al, neg, neg) 							\
+	DEFINE_TOKEN(al, eq, eq) 							\
+	DEFINE_TOKEN(al, get, get) 							\
+	DEFINE_TOKEN(al, lt, lt) 							\
+	DEFINE_TOKEN(al, and, and) 							\
+	DEFINE_TOKEN(al, or, or ) 							\
+	DEFINE_TOKEN(al, not, not) 							\
+	DEFINE_TOKEN(ma, pop, pop) 							\
+	DEFINE_TOKEN(ma, push, push) 						\
+	DEFINE_TOKEN(bc, label, label) 						\
+	DEFINE_TOKEN(bc, goto, goto) 						\
+	DEFINE_TOKEN(bc, if_goto, if_goto)                  \
+	DEFINE_TOKEN(fc, function, function) 				\
+	DEFINE_TOKEN(fc, call, call) 						\
+	DEFINE_TOKEN(fc, return, return) 					\
+	DEFINE_TOKEN(ts, number, "D") 					    \
+	DEFINE_TOKEN(ts, symbol, "regex") 						
+
+#define DEFINE_ENUM(category, token, pattern)  \
+    category##_##token,
+
+enum class tokens_t {
+    TOKENS_TABLE(DEFINE_ENUM)
 };
+typedef tokens_t terminals_t;
+#define EXPAND_AS_STRUCT(a,b,c) unsigned char a##_##b;
+typedef struct{
+    TOKENS_TABLE(EXPAND_AS_STRUCT)
+} size_struct_t ;
+
+#define NUM_STATES      sizeof(size_struct_t)
+// namespace VM {
 
 typedef uint16_t memory_t;
 // namespace VM {
 // token types
-enum struct terminals_t;
 extern const stork::lookup<std::string_view, terminals_t> reserved_memory_segment_terminal_map;
 extern const stork::lookup<std::string_view, terminals_t> reserved_instruction_terminal_map;
 struct number_t {

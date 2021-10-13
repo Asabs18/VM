@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "../../include/token.hpp"
 #include "../include/token.hpp"
 
@@ -75,11 +76,11 @@ static MunitResult
 get_invalid_number_token(const MunitParameter params[], void* data) {
 	//Arrange
 	token_t token({ number_t{1234} }, 0, 0);
-	const terminals_t* terminal = reinterpret_cast<const terminals_t*>(0xDEADBEEF);
+	const terminals_t* terminal = reinterpret_cast<const terminals_t*>((intptr_t)0xDEADBEEF);
 	//Act
-  terminal = token.get_terminal();
+  	terminal = token.get_terminal();
 	//Assert
-  munit_assert_ptr_equal(terminal, nullptr);
+  	munit_assert_ptr_equal(terminal, nullptr);
 
 	return MUNIT_OK;
 }

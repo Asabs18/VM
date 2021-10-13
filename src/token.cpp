@@ -2,9 +2,9 @@
 #include <cstdint>
 
 #include "../include/token.hpp"
-//
+// HACK: Not sure what do here given (a) x-macroed tokens, and, (b) design of symbol table
 #define TERMINAL(prefix, terminal)        \
-    { #terminal, terminals_t::DEFINE_TERMINAL(prefix, terminal) }
+    { #terminal, terminals_t::prefix##_##terminal }
 //
 // HACK: Why the q-name?
 const stork::lookup<std::string_view,  terminals_t> reserved_memory_segment_terminal_map {
