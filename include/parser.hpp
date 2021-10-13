@@ -1,5 +1,4 @@
 #pragma once
-// TODO: add header guard
 #include <string_view>
 #include "lookup.hpp"
 #include "token.hpp"
