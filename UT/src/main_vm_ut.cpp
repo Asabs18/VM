@@ -22,8 +22,11 @@ const MunitSuite VM_test_suite[] = {
 const MunitSuite root_test_suite = {
 	munit_ex_register_empty_sub_suite(VM, VM_test_suite)
 };
-
+// TODO: Remove parser_t code - TESTING ONLY.
+#include <string>
+#include "../include/parser.hpp"
 //main runs the root test suite
 int main_vm_ut(int argc, char* argv[]) {
+	parser_t parser(std::string("djg"));
 	return munit_suite_main(&root_test_suite, NULL, argc, argv);
 }
