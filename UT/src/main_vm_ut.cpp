@@ -24,7 +24,7 @@ const MunitSuite root_test_suite = {
 };
 // TODO: Remove parser_t code - TESTING ONLY.
 #include <string>
-#include "../include/parser.hpp"
+#include "../../include/parser.hpp"
 //main runs the root test suite
 int main_vm_ut(int argc, char* argv[]) {
 	parser_t parser(std::string("djg"));
