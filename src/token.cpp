@@ -42,4 +42,33 @@ const stork::lookup<std::string_view, terminals_t> reserved_instruction_terminal
     TERMINAL(fc, call),
     TERMINAL(fc, return)
 };
+
+#include "../include/parser.hpp"
+
+
+
+terminals_t parser_t::tokenizer_t::tokenize(){
+//   vector<char> characters = stream; //Not sure how this will work
+//   vector<char>::iterator ptr;
+//   for(ptr = characters.begin(); ptr < characters.end(); ptr++){
+// 		size_t line_number = stream.line_number();
+// 	  size_t char_index = stream.char_index();
+// 		int currentChar = stream();
+// 		switch(getCharType(currentChar)){
+// 			case getCharType(currentChar)::eof:
+// 				return {oef(), line_number, char_index};	
+// 			case getCharType(currentChar)::space:
+// 				continue;
+// 			case currentChar == '/' && getNextChar(stream) == '/': 
+// 				skipComment();
+// 			case currentChar == 'p':
+// 				switch(NEXTCHAR):
+// 					case NEXTCHAR == 'o':
+// 						Its pop
+// 					case NEXTCHAR == 'u':
+// 						Its push	
+// 		}
+// 	}
+    return terminals_t::fc_return;
+}
 // }

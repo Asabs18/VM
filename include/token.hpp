@@ -38,7 +38,7 @@
 	DEFINE_TOKEN(ma, push, push) 						\
 	DEFINE_TOKEN(bc, label, label) 						\
 	DEFINE_TOKEN(bc, goto, goto) 						\
-	DEFINE_TOKEN(bc, if_goto, if_goto)                  \
+	DEFINE_TOKEN(bc, if_goto, if-goto)                  \
 	DEFINE_TOKEN(fc, function, function) 				\
 	DEFINE_TOKEN(fc, call, call) 						\
 	DEFINE_TOKEN(fc, return, return) 					\

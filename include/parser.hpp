@@ -11,7 +11,7 @@ class parser_t {
     // TODO: Remove TEST ONLY implementation.
     parser_t(std::string file_name) {};
     parser_t(std::ifstream file_stream);
-    parser_t(std::stringstream);
+    parser_t(std::stringstream string_stream);
 
     // TODO: Iterators?
     token_t cbegin();
@@ -27,7 +27,7 @@ class parser_t {
     private:
     class tokenizer_t {
     tokenizer_t(std::ifstream file_stream);
-    tokenizer_t(std::stringstream);
+    tokenizer_t(std::stringstream string_stream);
     //! TODO: Implement using:
     //  1) string comparison
     //  2) [std::stoi, std::stol, std::stoll - cppreference.com](https://en.cppreference.com/w/cpp/string/basic_string/stol)
@@ -35,7 +35,7 @@ class parser_t {
     //      - semantic analysis done by parser_t (valid number - positive, range)
     //  3) [Regular expressions library - cppreference.com](https://en.cppreference.com/w/cpp/regex)
     //      - symbols: `labels` and `function names`
-    token_t tokenize();
+    terminals_t tokenize();
     // //! The `Big `5`.
     tokenizer_t() = delete;
     tokenizer_t(const tokenizer_t&) = delete;
