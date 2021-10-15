@@ -15,10 +15,7 @@
 				"/FS",
 				"/Foobj\\",
 				"/Fdobj\\",
-				"/Feobj\\",
-				// "/Fe:",
-				// "${fileDirname}\\${fileBasenameNoExtension}.exe",
-				// "${file}"				
+				"/Feobj\\",		
 				"main.cpp", "src\\*.cpp", "UT\\src\\*.cpp", "munit\\*.cpp"
 			],
 			"options": {
