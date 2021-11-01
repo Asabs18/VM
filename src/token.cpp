@@ -1,5 +1,7 @@
 #include <cassert>
 #include <cstdint>
+#include <fstream>
+#include <iostream>
 
 #include "../include/token.hpp"
 // HACK: Not sure what do here given (a) x-macroed tokens, and, (b) design of symbol table
@@ -45,30 +47,37 @@ const stork::lookup<std::string_view, terminals_t> reserved_instruction_terminal
 
 #include "../include/parser.hpp"
 
-
-
+enum wordType { eof, space, alpha, num, punct };
 terminals_t parser_t::tokenizer_t::tokenize(){
-//   vector<char> characters = stream; //Not sure how this will work
-//   vector<char>::iterator ptr;
-//   for(ptr = characters.begin(); ptr < characters.end(); ptr++){
-// 		size_t line_number = stream.line_number();
-// 	  size_t char_index = stream.char_index();
-// 		int currentChar = stream();
-// 		switch(getCharType(currentChar)){
-// 			case getCharType(currentChar)::eof:
-// 				return {oef(), line_number, char_index};	
-// 			case getCharType(currentChar)::space:
-// 				continue;
-// 			case currentChar == '/' && getNextChar(stream) == '/': 
-// 				skipComment();
-// 			case currentChar == 'p':
-// 				switch(NEXTCHAR):
-// 					case NEXTCHAR == 'o':
-// 						Its pop
-// 					case NEXTCHAR == 'u':
-// 						Its push	
-// 		}
-// 	}
+    int length = 0; //TBD
+    char* buffer = new char [length];
+    while(true){
+      char character = stream.read(buffer, 1);
+      switch(getCharType(character)){
+        case eof:
+          return {eof(), lineNum, charIndex}
+        case space:
+          continue;
+        case alphanum:
+          stream.putback(character);
+          return fetchToken(fetchFullString()); //make member function so you dont have to pass in stream
+        case num:
+          stream.putback(character);
+          return fetchToken(fetchFullNumber()); 
+        case punct:
+          switch(character) {
+            case '/':
+              if(stream.peek() == '/'){
+                stream.putback(character);
+                skipComment();
+              }
+            default:
+              return "error" //change to thorw and exception or raise error
+          }
+        default:
+          stream.putback(character);
+          return "error" //change to thorw and exception or raise error
+      }
+    }
     return terminals_t::fc_return;
 }
-// }
