@@ -91,13 +91,13 @@ get_invalid_number_token(const MunitParameter params[], void* data) {
 #define EXPAND_MS_TOKEN_AS_ENUM(category, token, pattern)        \
     tokens_t::ms##_##token,
 
-static char* ms_tokens_string_params[] = {
+static const char* ms_tokens_string_params[] = {
       MS_TOKENS_TABLE(EXPAND_MS_TOKEN_AS_STRING)
       NULL
 };
 
 static MunitParameterEnum validate_reserved_memory_segment_terminal_params[] = {
-  { "ms_tokens_string_params", ms_tokens_string_params },
+  {(char*)"ms_tokens_string_params", (char**)ms_tokens_string_params },
   { NULL, NULL },
 };
 
