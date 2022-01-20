@@ -231,7 +231,7 @@ test_parameters(const MunitParameter params[], void* user_data) {
  * before the test, and the return value will be passed as the sole
  * parameter to the test function. */
 static void*
-test_compare_setup(const MunitParameter params[], void* user_data) {
+setup_memory_segments(const MunitParameter params[], void* user_data) {
   (void) params;
 
 // djg  munit_assert_string_equal(user_data, "µnit");
@@ -282,7 +282,7 @@ static MunitTest test_suite_tests[] = {
      *
      * For our example we don't really need a fixture, but lets
      * provide one anyways. */
-    test_compare_setup,
+    setup_memory_segments,
     /* If you passed a callback for the fixture setup function, you
      * may want to pass a corresponding callback here to reverse the
      * operation. */

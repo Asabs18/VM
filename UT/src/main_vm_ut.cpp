@@ -1,3 +1,4 @@
+#include "../include/parser.hpp"
 #include "../include/token.hpp"
 
 MunitTest dummy_tests[] = {
@@ -13,6 +14,7 @@ const MunitSuite dummy_test_suite[] = {
 //The ACL test suite calls the assembleCheck Tests
 const MunitSuite VM_test_suite[] = {
     { munit_ex_register_sub_suite(token_t , NULL) },
+    { munit_ex_register_sub_suite(parser_t , NULL) },
     { munit_ex_register_sub_suite(dummy, NULL) },
     { munit_ex_register_full_sub_suite_easy(dummy, dummy_tests, dummy_test_suite, 1) },
     // { munit_ex_register_sub_suite(codeGenCheck, NULL) },

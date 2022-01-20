@@ -1,35 +1,35 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "cppbuild",
-			"label": "C/C++: cl.exe build active file",
-			"command": "cl.exe",
-			"args": [
-				"/D_UT_",
-				"/DMUNIT_TEST_NAME_LEN=45",
-				"/Iinclude",
-				"/std:c++17",
-				"/Zi",
-				"/EHsc",
-				"/nologo",
-				"/FS",
-				"/Foobj\\",
-				"/Fdobj\\",
-				"/Feobj\\",		
-				"main.cpp", "src\\*.cpp", "UT\\src\\*.cpp", "munit\\*.cpp"
-			],
-			"options": {
-				"cwd": "${fileDirname}"
-			},
-			"problemMatcher": [
-				"$msCompile"
-			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"detail": "compiler: cl.exe"
-		}
-	]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: cl.exe build active file",
+            "command": "cl.exe",
+            "args": [
+                "/D_UT_",
+                "/DMUNIT_TEST_NAME_LEN=45",
+                "/Iinclude",
+                "/std:c++17",
+                "/Zi",
+                "/EHsc",
+                "/nologo",
+                "/FS",
+                "/Foobj\\",
+                "/Fdobj\\",
+                "/Feobj\\",
+                "main.cpp", "src\\*.cpp", "UT\\src\\*.cpp", "munit\\*.cpp"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "compiler: cl.exe"
+        }
+    ]
 }

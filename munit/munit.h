@@ -300,7 +300,7 @@ void munit_errorf_ex(const char* filename, int line, const char* format, ...);
       (munit_tmp_a_ - munit_tmp_b_); \
     if (MUNIT_UNLIKELY(munit_tmp_diff_ > 1e-##precision)) { \
       munit_errorf("assertion failed: %s == %s (%0." #precision "g == %0." #precision "g)", \
-		   #a, #b, munit_tmp_a_, munit_tmp_b_); \
+           #a, #b, munit_tmp_a_, munit_tmp_b_); \
     } \
     MUNIT__PUSH_DISABLE_MSVC_C4127 \
   } while (0) \
