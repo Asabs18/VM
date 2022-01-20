@@ -51,13 +51,13 @@
 
     "editor.detectIndentation": false,
     "workbench.colorCustomizations": {
-        "tab.activeBorder": "#13E970",
-        "statusBar.background": "#13E970",
-        "statusBar.foreground": "#ffffff",
-        "titleBar.activeBackground": "#13E970",
-        "titleBar.activeForeground": "#ffffff",
+        "tab.activeBorder": "#B226B4",
+        "statusBar.background": "#B226B4",
+        "statusBar.foreground": "#000000",
+        "titleBar.activeBackground": "#B226B4",
+        "titleBar.activeForeground": "#000000",
         "activityBar.background": "#07F440",
         "activityBar.foreground": "#ffffff"
     },
-    "window.title": "~[VM]~${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${dirty}${activeEditorShort}${separator}${rootName}${separator}${appName}",
+    "window.title": "~[VM]~${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${dirty}${activeEditorShort}${separator}${rootName}${separator}${appName}",
 }
