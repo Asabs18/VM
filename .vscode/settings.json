@@ -56,7 +56,7 @@
         "statusBar.foreground": "#000000",
         "titleBar.activeBackground": "#B226B4",
         "titleBar.activeForeground": "#000000",
-        "activityBar.background": "#07F440",
+        "activityBar.background": "#000000",
         "activityBar.foreground": "#ffffff"
     },
     "window.title": "~[VM]~${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${dirty}${activeEditorShort}${separator}${rootName}${separator}${appName}",
