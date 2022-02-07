@@ -13,7 +13,6 @@ class parser_t {
     parser_t(std::ifstream file_stream);
     parser_t(std::stringstream string_stream);
 
-    // TODO: Iterators?
     token_t cbegin();
     token_t cend();
     //! The `Big `5`.
@@ -28,13 +27,7 @@ class parser_t {
     class tokenizer_t {
     tokenizer_t(std::ifstream file_stream);
     tokenizer_t(std::stringstream string_stream);
-    //! TODO: Implement using:
-    //  1) string comparison
-    //  2) [std::stoi, std::stol, std::stoll - cppreference.com](https://en.cppreference.com/w/cpp/string/basic_string/stol)
-    //      - lexical analysis by tokenizer (valid integer)
-    //      - semantic analysis done by parser_t (valid number - positive, range)
-    //  3) [Regular expressions library - cppreference.com](https://en.cppreference.com/w/cpp/regex)
-    //      - symbols: `labels` and `function names`
+    
     terminals_t tokenize();
     // //! The `Big `5`.
     tokenizer_t() = delete;
@@ -70,7 +63,6 @@ struct if_goto_t
 struct memory_segment_t
 {
     // const stork::lookup<std::string_view,  terminals_t> reserved_memory_segment_terminal_map {
-    // TODO: enumerate
 };
 
 struct memory_segment_index_t : number_t

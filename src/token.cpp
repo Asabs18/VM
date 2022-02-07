@@ -72,11 +72,11 @@ terminals_t parser_t::tokenizer_t::tokenize(){
                 skipComment();
               }
             default:
-              return "error" //change to thorw and exception or raise error
+              return "error" //change to throw and exception or raise error
           }
         default:
           stream.putback(character);
-          return "error" //change to thorw and exception or raise error
+          return "error" //change to throw and exception or raise error
       }
     }
     return terminals_t::fc_return;
