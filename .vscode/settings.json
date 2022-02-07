@@ -4,6 +4,60 @@
         "cstdint": "cpp",
         "memory": "cpp",
         "system_error": "cpp",
-        "xmemory": "cpp"
-    }
+        "xmemory": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "algorithm": "cpp",
+        "cassert": "cpp",
+        "utility": "cpp"
+    },
+
+    "colorTabs.config": [
+        {
+            "regex": "munit\\.*",
+            "label": "µnit",
+        },
+        {
+            "regex": "UT/src\\.*",
+            "label": "UT"
+        },
+        {
+            "regex": "UT/include\\.*",
+            "label": "UT"
+        },
+        {
+            "regex": "src\\.*",
+            "label": "VM"
+        },
+        {
+            "regex": "include\\.*",
+            "label": "VM"
+        },
+        {
+            "regex": ".vscode\\.*",
+            "label": ".vscode"
+        },
+        {
+            "regex": "\\.*",
+            "label": "main"
+        }
+    ],
+    "colorTabs.statusBarBackground": true,
+    "colorTabs.tabBorder": true,
+    "colorTabs.titleBackground": true,
+    "colorTabs.activityBarBackground": false,
+    "colorTabs.titleLabel": true,
+    "colorTabs.ignoreCase": false,
+
+    "editor.detectIndentation": false,
+    "workbench.colorCustomizations": {
+        "tab.activeBorder": "#B226B4",
+        "statusBar.background": "#B226B4",
+        "statusBar.foreground": "#000000",
+        "titleBar.activeBackground": "#B226B4",
+        "titleBar.activeForeground": "#000000",
+        "activityBar.background": "#000000",
+        "activityBar.foreground": "#ffffff"
+    },
+    "window.title": "~[VM]~${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${dirty}${activeEditorShort}${separator}${rootName}${separator}${appName}",
 }
