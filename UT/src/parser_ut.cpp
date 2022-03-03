@@ -1,230 +1,58 @@
-<<<<<<< HEAD
 #include "../../include/parser.hpp"
 #include "../include/parser.hpp"
 #include "../../src/token.cpp"
-
-
+// [dynamic_cast conversion - cppreference.com](https://en.cppreference.com/w/cpp/language/dynamic_cast)
 static MunitResult
-tokenize_returns_expected_val(const MunitParameter params[], void* data) {
-	return MUNIT_SKIP;
-}
-
-static MunitResult
-tokenize_invalid_input_returns_err1(const MunitParameter params[], void* data) {
-	// terminals_t output = parser_t::tokenizer_t::tokenize();
-    // munit_assert_true(output == ???);
-    // MUNIT_OK;
-}
-
-static MunitResult
-tokenize_invalid_input_returns_err2(const MunitParameter params[], void* data) {
-	return MUNIT_SKIP;
-}
-
-static MunitResult
-tokenize_invalid_input_returns_err3(const MunitParameter params[], void* data) {
-	return MUNIT_SKIP;
-}
-
-static MunitResult
-get_line_number_returns_correct_line(const MunitParameter params[], void* data) {
-	// size_t lineNum = get_line_number();
-    // munit_assert_int(lineNum, ==, ???)
-    // MUNIT_OK;
-}
-
-static MunitResult
-get_char_index_returns_correct_index(const MunitParameter params[], void* data) {
-	// size_t charIndex = get_char_index();
-    // munit_assert_int(charIndex, ==, ???)
-    // MUNIT_OK;
-}
-
-static MunitResult
-is_terminal_valid_input_returns_true(const MunitParameter params[], void* data) {
-	return MUNIT_SKIP;
-}
-
-static MunitResult
-is_terminal_invalid_input_returns_false(const MunitParameter params[], void* data) {
-	return MUNIT_SKIP;
-}
-
-static MunitResult
-is_number_valid_input_returns_true(const MunitParameter params[], void* data) {
-	return MUNIT_SKIP;
-}
-
-static MunitResult
-is_number_invalid_input_returns_false(const MunitParameter params[], void* data) {
-	return MUNIT_SKIP;
-}
-
-static MunitResult
-is_label_valid_input_returns_true(const MunitParameter params[], void* data) {
-	return MUNIT_SKIP;
-}
-
-static MunitResult
-is_label_invalid_input_returns_false(const MunitParameter params[], void* data) {
-	return MUNIT_SKIP;
-}
-
-MunitTest parser_t_tests[] = {
-	munit_ex_register_test(tokenize_returns_expected_val, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-	munit_ex_register_test(tokenize_invalid_input_returns_err1, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-	munit_ex_register_test(tokenize_invalid_input_returns_err2, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-	munit_ex_register_test(tokenize_invalid_input_returns_err3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-	munit_ex_register_test(get_line_number_returns_correct_line, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-	munit_ex_register_test(get_char_index_returns_correct_index, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-	munit_ex_register_test(is_terminal_valid_input_returns_true, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-	munit_ex_register_test(is_terminal_invalid_input_returns_false, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-    munit_ex_register_test(is_number_valid_input_returns_true, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-	munit_ex_register_test(is_number_invalid_input_returns_false, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-    munit_ex_register_test(is_label_valid_input_returns_true, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-	munit_ex_register_test(is_label_invalid_input_returns_false, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-	{ NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
-};
-=======
-#include <cstdint>
-#include "../../include/parser.hpp"
-#include "../include/parser.hpp"
-
-static MunitResult
-create_terminal_token(const MunitParameter params[], void* data) {
+parseIdentifiesMaCommandsCorrectly(const MunitParameter params[], void* data) {
     // Arrange
-    token_t token(tokens_t::ms_local, 0, 0);
+    parser_t* parser = new parser_t(" pop local 1 ");
     // Act
-    bool b = token.is_token();
+    // try {
+        ma_instructions_t instruction = dynamic_cast<ma_instructions_t&>(parser->parse());
+    // } catch (std::bad_cast) { };
     // Assert
-    munit_assert_true(b);
-
-    return MUNIT_SKIP;
+    munit_assert_true(instruction.instruction == "pop" && instruction.memory_segment == "local" && instruction.index == 1);
+    return MUNIT_OK;
 }
+
 static MunitResult
-create_number_token(const MunitParameter params[], void* data) {
+parseIdentifiesAlCommandsCorrectly(const MunitParameter params[], void* data) {
     // Arrange
-    token_t token({ number_t{1234} }, 0, 0);
+    parser_t* parser = new parser_t(" add ");
     // Act
-    bool b = token.is_number();
+    instruction_t instruction = parser->parse();
     // Assert
-    munit_assert_true(b);
-
-    return MUNIT_SKIP;
+    munit_assert_true(instruction.instruction == "add");
+    return MUNIT_OK;
 }
+
 static MunitResult
-create_label_token(const MunitParameter params[], void* data) {
+parseIdentifiesBrCommandsCorrectly(const MunitParameter params[], void* data) {
     // Arrange
-    token_t token({ label_t{"label_t"} }, 0, 0);
+    parser_t* parser = new parser_t(" goto LOOP ");
     // Act
-    bool b = token.is_label();
+    instruction_t instruction = parser->parse();
     // Assert
-    munit_assert_true(b);
-
-    return MUNIT_SKIP;
+    munit_assert_true(instruction.instruction == "goto" && instruction.label = "LOOP");
+    return MUNIT_OK;
 }
+
 static MunitResult
-cast_terminal_token(const MunitParameter params[], void* data) {
+parseIdentifiesFnCommandsCorrectly(const MunitParameter params[], void* data) {
     // Arrange
-    token_t token(tokens_t::ms_local, 0, 0);
+    parser_t* parser = new parser_t(" function func var1 var2 ");
     // Act
-    tokens_t terminal = token;
+    instruction_t instruction = parser->parse();
     // Assert
-    munit_assert(terminal == tokens_t::ms_local);
-
-    return MUNIT_SKIP;
-}
-static MunitResult
-invalid_cast_number_token(const MunitParameter params[], void* data) {
-    // Arrange
-    token_t token({ number_t{1234} }, 0, 0);
-    tokens_t terminal = tokens_t::ts_number;
-    // Act
-    try {
-        terminal = token;
-    }
-     catch(...) {
-    }
-    // Assert
-    munit_assert(terminal == tokens_t::ts_number);
-    return MUNIT_SKIP;
-}
-static MunitResult
-get_terminal_token(const MunitParameter params[], void* data) {
-    // Arrange
-    token_t token(tokens_t::ms_local, 0, 0);
-    // Act
-    const tokens_t* terminal = token.get_token();
-    // Assert
-    munit_assert(*terminal == tokens_t::ms_local);
-
-    return MUNIT_SKIP;
-}
-static MunitResult
-get_invalid_number_token(const MunitParameter params[], void* data) {
-    // Arrange
-    token_t token({ number_t{1234} }, 0, 0);
-    const tokens_t* terminal = reinterpret_cast<const tokens_t*>((intptr_t)0xDEADBEEF);
-    // Act
-      terminal = token.get_token();
-    // Assert
-      munit_assert_ptr_equal(terminal, nullptr);
-
-    return MUNIT_SKIP;
-}
-// *****
-#define EXPAND_MS_TOKEN_AS_STRING(category, token, pattern)        \
-    #token,
-
-#define EXPAND_MS_TOKEN_AS_ENUM(category, token, pattern)        \
-    tokens_t::ms##_##token,
-
-static const char* ms_tokens_string_params[] = {
-      MS_TOKENS_TABLE(EXPAND_MS_TOKEN_AS_STRING)
-      NULL
-};
-
-static MunitParameterEnum validate_reserved_memory_segment_terminal_params[] = {
-  {(char*)"ms_tokens_string_params", (char**)ms_tokens_string_params },
-  { NULL, NULL },
-};
-
-static void*
-setup_memory_segments(const MunitParameter params[], void* user_data) {
-    static tokens_t ms_tokens[] = {
-      MS_TOKENS_TABLE(EXPAND_MS_TOKEN_AS_ENUM)
-      tokens_t::ts_null
-    };
-    return ms_tokens;
-}
-static MunitResult
-validate_reserved_memory_segment_terminal(const MunitParameter params[], void* data) {
-    // Arrange
-    const tokens_t* ms_tokens = (const tokens_t*) data;
-    const char* ms_tokens_string_param = munit_parameters_get(params, "ms_tokens_string_params");
-    // Act
-    auto sut = memory_segment_t::reserved_memory_segment_terminal_map.find(ms_tokens_string_param);
-    // Assert
-    MunitResult result = MunitResult::MUNIT_FAIL;
-    for (size_t i = 0; ms_tokens[i] != tokens_t::ts_null; i++) {
-        if(sut->second == ms_tokens[i]) {
-            result = MunitResult::MUNIT_OK;
-            break;
-        }
-    }
-    return result;
+    munit_assert_true(instruction.instruction == "function" && instruction.name == "func" && instruction.number == 2);
+    return MUNIT_OK;
 }
 
 //declares the test suite to run each test in this file
 MunitTest parser_t_tests[] = {
-    munit_ex_register_test(create_terminal_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-    munit_ex_register_test(create_number_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-    munit_ex_register_test(create_label_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-    munit_ex_register_test(cast_terminal_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-    munit_ex_register_test(invalid_cast_number_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-    munit_ex_register_test(get_terminal_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-    munit_ex_register_test(get_invalid_number_token, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
-    munit_ex_register_test(validate_reserved_memory_segment_terminal, setup_memory_segments, NULL, MUNIT_TEST_OPTION_NONE, validate_reserved_memory_segment_terminal_params),
+    munit_ex_register_test(parseIdentifiesMaCommandsCorrectly, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
+    munit_ex_register_test(parseIdentifiesAlCommandsCorrectly, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
+    munit_ex_register_test(parseIdentifiesBrCommandsCorrectly, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
+    munit_ex_register_test(parseIdentifiesFnCommandsCorrectly, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL),
     { NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
 };
->>>>>>> origin/master

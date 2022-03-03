@@ -1,4 +1,5 @@
 #include "../include/parser.hpp"
+#include <string>
 //
 #define TERMINAL(prefix, terminal)        \
     { #terminal, tokens_t::prefix##_##terminal }
