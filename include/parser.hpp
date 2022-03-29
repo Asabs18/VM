@@ -4,7 +4,7 @@
 #include <string>
 
 struct instruction_t {
-    string instruction;
+    std::string instruction;
     virtual ~instruction_t() = default;
 };
 
@@ -19,7 +19,7 @@ class parser_t {
             tokenizer_t(std::ifstream file_stream);
             tokenizer_t(std::stringstream string_stream);
             
-            terminals_t tokenize();
+            token_t* tokenize();
         };
 
         //string advance();
@@ -37,31 +37,36 @@ class parser_t {
         parser_t& operator=(parser_t&&) = delete;
         virtual ~parser_t() = default;
         
-        instruction_t& parse();
+        instruction_t* parse();
 };
 
 struct memory_segment_t
 {
     // const stork::lookup<std::string_view,  terminals_t> reserved_memory_segment_terminal_map {
+    std::string memory_segment;
 };
 
+struct memory_segment_index_t : number_t {
+    // int index;
+};
+ 
 // AL instructions
 struct al_instruction_t : instruction_t {
 };
 
 // MA instructions
-struct ma_instructions_t : public instruction_t {
+struct ma_instruction_t : public instruction_t {
     memory_segment_t memory_segment;
     memory_segment_index_t index;
 };
 
 // BC instructions 
-struct bc_t : instruction_t {
+struct br_instruction_t : instruction_t {
     label_t label;
 };
 
 // FC instructions
-struct function_instruction_t {
+struct fn_instruction_t : instruction_t {
     function_name_t name;
     number_t number;    // locals or arguments;
 };

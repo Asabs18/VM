@@ -1,17 +1,21 @@
+// SUT
 #include "../../include/parser.hpp"
+// Test
 #include "../include/parser.hpp"
-#include "../../src/token.cpp"
+
 // [dynamic_cast conversion - cppreference.com](https://en.cppreference.com/w/cpp/language/dynamic_cast)
+
 static MunitResult
 parseIdentifiesMaCommandsCorrectly(const MunitParameter params[], void* data) {
     // Arrange
     parser_t* parser = new parser_t(" pop local 1 ");
     // Act
     // try {
-        ma_instructions_t instruction = dynamic_cast<ma_instructions_t&>(parser->parse());
+    ma_instruction_t* instruction = dynamic_cast<ma_instruction_t*>(parser->parse());
+    delete parser;
     // } catch (std::bad_cast) { };
     // Assert
-    munit_assert_true(instruction.instruction == "pop" && instruction.memory_segment == "local" && instruction.index == 1);
+    munit_assert_true(instruction->instruction == "pop" && instruction->memory_segment.memory_segment == "local" && instruction->index.value == 1);
     return MUNIT_OK;
 }
 
@@ -20,9 +24,9 @@ parseIdentifiesAlCommandsCorrectly(const MunitParameter params[], void* data) {
     // Arrange
     parser_t* parser = new parser_t(" add ");
     // Act
-    instruction_t instruction = parser->parse();
+    al_instruction_t* instruction = dynamic_cast<al_instruction_t*>(parser->parse());
     // Assert
-    munit_assert_true(instruction.instruction == "add");
+    munit_assert_true(instruction->instruction == "add");
     return MUNIT_OK;
 }
 
@@ -31,9 +35,9 @@ parseIdentifiesBrCommandsCorrectly(const MunitParameter params[], void* data) {
     // Arrange
     parser_t* parser = new parser_t(" goto LOOP ");
     // Act
-    instruction_t instruction = parser->parse();
+    br_instruction_t* instruction = dynamic_cast<br_instruction_t*>(parser->parse());
     // Assert
-    munit_assert_true(instruction.instruction == "goto" && instruction.label = "LOOP");
+    munit_assert_true(instruction->instruction == "goto" && instruction->label == "LOOP");
     return MUNIT_OK;
 }
 
@@ -42,9 +46,9 @@ parseIdentifiesFnCommandsCorrectly(const MunitParameter params[], void* data) {
     // Arrange
     parser_t* parser = new parser_t(" function func var1 var2 ");
     // Act
-    instruction_t instruction = parser->parse();
+    fn_instruction_t* instruction = dynamic_cast<fn_instruction_t*>(parser->parse());
     // Assert
-    munit_assert_true(instruction.instruction == "function" && instruction.name == "func" && instruction.number == 2);
+    munit_assert_true(instruction->instruction == "function" && instruction->name == "func" && instruction->number.value == 2);
     return MUNIT_OK;
 }
 
