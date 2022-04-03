@@ -14,8 +14,8 @@ int main_vm(int argc, char* argv[]) {
         std::cout << reserved_instruction_terminal.first << std::endl;
     }
     std::cout << "---" << std::endl;
-    for (const auto& reserved_memory_segment_terminal : memory_segment_t::reserved_memory_segment_terminal_map) {
-        std::cout << reserved_memory_segment_terminal.first << std::endl;
-    }
+    // for (const auto& reserved_memory_segment_terminal : memory_segment_t::reserved_memory_segment_terminal_map) {
+    //     std::cout << reserved_memory_segment_terminal.first << std::endl;
+    // }
     return EXIT_SUCCESS;
 }

@@ -1,4 +1,6 @@
 #include <cassert>
+#include "include/parser.hpp"
+
 // `main()` driver program:
 //  _VM_:   call VM's main()
 //  _UT_:   call VM's µnit main()
@@ -24,4 +26,7 @@ int main(int argc, char* argv[]) {
     #pragma message("***\n*** Undefined main()\n***\n")
     assert(false);
 #endif // _UT_
+
+parser_t parser("push pop add");
+parser.parse();
 }

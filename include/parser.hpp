@@ -18,17 +18,15 @@ class parser_t {
         class tokenizer_t {
             tokenizer_t(std::ifstream file_stream);
             tokenizer_t(std::stringstream string_stream);
-            
+
             token_t* tokenize();
         };
-
-        //string advance();
 
     public:
         parser_t(std::string file_name) {};
         parser_t(std::ifstream file_stream);
         parser_t(std::stringstream string_stream);
-    
+
         //The Big 5:
         parser_t() = delete;
         parser_t(const parser_t&) = delete;
