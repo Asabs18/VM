@@ -20,6 +20,7 @@ class parser_t {
             tokenizer_t(std::stringstream string_stream);
 
             token_t* tokenize();
+            std::string readNextWord(std::stringstream& file);
         };
 
     public:

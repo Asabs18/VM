@@ -4,6 +4,8 @@
 #include <fstream>   
 #include <vector>
 #include <sstream>
+#include <algorithm>
+#include <cassert>
 
 
 #define TOKEN(prefix, token)        \
@@ -14,11 +16,17 @@ instruction_t* parser_t::parse(){
 }
 
 
-
 //======================= Tokenizer =========================
 
 
 #define LETTER_COUNT 8
+
+void print(std::vector <char> const &a) {
+   std::cout << "The vector elements are : ";
+
+   for(int i=0; i < a.size(); i++)
+   std::cout << a.at(i) << ' ';
+}
 
 bool isValidTokenMA(std::string word){
     bool isValidToken = false;
@@ -71,10 +79,10 @@ bool isNumber(const std::string& str)
     return true;
 }
 
-std::string readLastWord(std::vector<std::string> tokenVector){
+std::string readLastWord(std::vector<std::string> nameVector){
     std::string lastWord = "None";
-    if (tokenVector.size() > 0){
-        lastWord = tokenVector[tokenVector.size() - 1];
+    if (nameVector.size() > 0){
+        lastWord = nameVector[nameVector.size() - 1];
     }
     return lastWord; 
 }
@@ -87,13 +95,18 @@ bool isFnName(std::string word, std::string lastWord){
     return isFnName;
 }
 
-std::string readNextWord(std::stringstream& file){
+bool isSpace(unsigned char c) {
+	return (c == ' ' || c == '\n' || c == '\r' ||
+		c == '\t' || c == '\v' || c == '\f');
+}
+
+std::string parser_t::tokenizer_t::readNextWord(std::stringstream& file){
     char c;
     int letterCount = 0;
     std::vector<char> wordVector = {' ',' ',' ',' ',' ',' ',' ',' '};
     
     while (file.get(c)){
-        if(c == ' ' || letterCount == LETTER_COUNT){
+        if(letterCount == LETTER_COUNT || isSpace(c)){
             wordVector.resize(letterCount);
             break;
         }
@@ -102,49 +115,57 @@ std::string readNextWord(std::stringstream& file){
             letterCount++;
         }
     }
-
+    
     std::string wordString(wordVector.begin(), wordVector.end());
-  
     return wordString; 
 }
 
-void print(std::vector <std::string> const &a) {
-   std::cout << "The vector elements are : ";
-
-   for(int i=0; i < a.size(); i++)
-   std::cout << a.at(i) << ' ';
-}
-
-
 token_t* parser_t::tokenizer_t::tokenize(){
     std::stringstream file("push pop sub add function fn sub 10 15");
-    std::vector<std::string> tokenVector = {};
     std::string word = readNextWord(file);
-    while (!file.eof()) {
+    std::vector<std::string> nameVector = {};
+    std::vector<token_t*> tokenVector = {};
+
+    size_t lineNum = 0;
+
+    bool run = true;
+    while (run) {
+        if (file.eof()){ run = false; }
         if(isValidToken(word)){
-            //token = new token_t(tokens_t, lineNum, charNum);
-            tokenVector.resize(tokenVector.size() + 1);
-            tokenVector[tokenVector.size() - 1] = word;
+            nameVector.resize(nameVector.size() + 1);
+            nameVector[nameVector.size() - 1] = word;
+            tokenVector.resize(nameVector.size());
+            auto it = reserved_instruction_terminal_map.find(word); 
+            assert(it != reserved_instruction_terminal_map.end());
+            tokens_t t = it->second;
+            tokenVector[tokenVector.size() - 1] = new token_t(t, lineNum, nameVector[nameVector.size() - 1].length());
             std::cout << "Token Added: " + word + "\n";
         }
         else if(isNumber(word) == false){
-            if(isFnName(word, readLastWord(tokenVector))){
-                //token = new token_t(function_name_t, lineNum, charNum);
-                tokenVector[tokenVector.size() - 1] = word;
+            if(isFnName(word, readLastWord(nameVector))){
+                //token_t FnName = new token_t(function_name_t, lineNum, charNum);
+                nameVector.resize(nameVector.size() + 1);
+                nameVector[nameVector.size() - 1] = word;
+                tokenVector.resize(nameVector.size());
+                //tokenVector[tokenVector.size() - 1] = new token_t(TOKEN(/*tokenType*/, /*word*/), lineNum, nameVector[nameVector.size() - 1].length());
                 std::cout << "Function Name Added: " + word + "\n";
             }
             else{
-                //token = new token_t(label_t, lineNum, charNum);
-                tokenVector[tokenVector.size() - 1] = word;
+                //token_t label = new token_t(label_t, lineNum, charNum);
+                nameVector[nameVector.size() - 1] = word;
                 std::cout << "Label Added: " + word + "\n";
             }
         }
         else {
-            //token = new token_t(number_t, lineNum, charNum);
-            tokenVector[tokenVector.size() - 1] = word;
+            //token_t number = new token_t(number_t, lineNum, charNum);
+            nameVector[nameVector.size() - 1] = word;
             std::cout << "Number Added: " + word + "\n";
         }
         word = readNextWord(file);
+        if(word.find('\n') != std::string::npos){
+            lineNum++;
+        }
+        word.erase(std::remove_if(word.begin(), word.end(), isSpace), word.end());
     }
     return 0;
 }
