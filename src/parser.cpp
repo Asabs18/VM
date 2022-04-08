@@ -126,45 +126,55 @@ token_t* parser_t::tokenizer_t::tokenize(){
     std::vector<std::string> nameVector = {};
     std::vector<token_t*> tokenVector = {};
 
-    size_t lineNum = 0;
-
     bool run = true;
     while (run) {
         if (file.eof()){ run = false; }
-        if(isValidToken(word)){
-            nameVector.resize(nameVector.size() + 1);
-            nameVector[nameVector.size() - 1] = word;
-            tokenVector.resize(nameVector.size());
-            auto it = reserved_instruction_terminal_map.find(word); 
-            assert(it != reserved_instruction_terminal_map.end());
+        // if(isValidToken(word)){
+        //     nameVector.resize(nameVector.size() + 1);
+        //     nameVector[nameVector.size() - 1] = word;
+        //     tokenVector.resize(nameVector.size());
+        //     auto it = reserved_instruction_terminal_map.find(word); 
+        //     assert(it != reserved_instruction_terminal_map.end());
+        //     tokens_t t = it->second;
+        //     tokenVector[tokenVector.size() - 1] = new token_t(t);
+        //     std::cout << "Token Added: " + word + "\n";
+        // }
+        // else if(isNumber(word) == false){
+        //     if(isFnName(word, readLastWord(nameVector))){
+        //         nameVector.resize(nameVector.size() + 1);
+        //         nameVector[nameVector.size() - 1] = word;
+        //         tokenVector.resize(nameVector.size());
+        //         std::cout << "Function Name Added: " + word + "\n";
+
+        //         nameVector.resize(nameVector.size() + 1);
+        //         nameVector[nameVector.size() - 1] = word;
+        //         tokenVector.resize(nameVector.size());
+        //         auto it = reserved_instruction_terminal_map.find(word); 
+        //         assert(it != reserved_instruction_terminal_map.end());
+        //         tokens_t t = it->second;
+        //         tokenVector[tokenVector.size() - 1] = new token_t(t);
+        //         std::cout << "Token Added: " + word + "\n";
+        //     }
+        //     else{
+        //         nameVector[nameVector.size() - 1] = word;
+        //         std::cout << "Label Added: " + word + "\n";
+        //     }
+        // }
+        // else {
+        //     nameVector[nameVector.size() - 1] = word;
+        //     std::cout << "Number Added: " + word + "\n";
+        // }
+
+        nameVector.resize(nameVector.size() + 1);
+        nameVector[nameVector.size() - 1] = word;
+        tokenVector.resize(nameVector.size());
+        auto it = reserved_instruction_terminal_map.find(word); 
+        if (it != reserved_instruction_terminal_map.end()){
             tokens_t t = it->second;
-            tokenVector[tokenVector.size() - 1] = new token_t(t, lineNum, nameVector[nameVector.size() - 1].length());
+            tokenVector[tokenVector.size() - 1] = new token_t(t);
             std::cout << "Token Added: " + word + "\n";
         }
-        else if(isNumber(word) == false){
-            if(isFnName(word, readLastWord(nameVector))){
-                //token_t FnName = new token_t(function_name_t, lineNum, charNum);
-                nameVector.resize(nameVector.size() + 1);
-                nameVector[nameVector.size() - 1] = word;
-                tokenVector.resize(nameVector.size());
-                //tokenVector[tokenVector.size() - 1] = new token_t(TOKEN(/*tokenType*/, /*word*/), lineNum, nameVector[nameVector.size() - 1].length());
-                std::cout << "Function Name Added: " + word + "\n";
-            }
-            else{
-                //token_t label = new token_t(label_t, lineNum, charNum);
-                nameVector[nameVector.size() - 1] = word;
-                std::cout << "Label Added: " + word + "\n";
-            }
-        }
-        else {
-            //token_t number = new token_t(number_t, lineNum, charNum);
-            nameVector[nameVector.size() - 1] = word;
-            std::cout << "Number Added: " + word + "\n";
-        }
         word = readNextWord(file);
-        if(word.find('\n') != std::string::npos){
-            lineNum++;
-        }
         word.erase(std::remove_if(word.begin(), word.end(), isSpace), word.end());
     }
     return 0;

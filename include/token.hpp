@@ -118,12 +118,10 @@ class token_t {
     private:
         using token_value = std::variant<tokens_t, number_t, label_t, function_name_t, eof_t>;
         token_value _value;
-        size_t _line_number;
-        size_t _char_index;
 
     public:
-        token_t(token_value value, size_t line_number, size_t char_index)
-            : _value(value), _line_number(line_number), _char_index(char_index) {};
+        token_t(token_value value)
+            : _value(value) {};
     
         bool is_token() const { return std::holds_alternative<tokens_t>(_value); };
         bool is_number() const { return std::holds_alternative<number_t>(_value); };
@@ -136,7 +134,4 @@ class token_t {
         const tokens_t* get_token() const { return is_token() ? std::get_if<tokens_t>(&_value) : nullptr; };
         const number_t* get_number() const { return is_number() ? std::get_if<number_t>(&_value) : nullptr; };
         const std::string* get_label() const { return is_label() ? std::get_if<label_t>(&_value) : nullptr; };
-    
-        size_t get_line_number() const;
-        size_t get_char_index() const;
 };
