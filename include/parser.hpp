@@ -19,7 +19,7 @@ class parser_t {
             tokenizer_t(std::ifstream file_stream);
             tokenizer_t(std::stringstream string_stream);
 
-            token_t* tokenize();
+            std::vector<token_t*> tokenize();
             std::string readNextWord(std::stringstream& file);
         };
 
@@ -36,7 +36,7 @@ class parser_t {
         parser_t& operator=(parser_t&&) = delete;
         virtual ~parser_t() = default;
         
-        instruction_t* parse();
+        instruction_t* parse(std::vector<token_t*> token);
 };
 
 struct memory_segment_t

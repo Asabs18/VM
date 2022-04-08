@@ -11,7 +11,11 @@
 #define TOKEN(prefix, token)        \
     { #token, tokens_t::prefix##_##token }
 
-instruction_t* parser_t::parse(){
+instruction_t* parser_t::parse(std::vector<token_t*> token){
+    switch(token){
+        case 
+    }
+
     return nullptr;
 }
 
@@ -120,7 +124,7 @@ std::string parser_t::tokenizer_t::readNextWord(std::stringstream& file){
     return wordString; 
 }
 
-token_t* parser_t::tokenizer_t::tokenize(){
+std::vector<token_t*> parser_t::tokenizer_t::tokenize(){
     std::stringstream file("push pop sub add function fn sub 10 15");
     std::string word = readNextWord(file);
     std::vector<std::string> nameVector = {};
@@ -165,9 +169,7 @@ token_t* parser_t::tokenizer_t::tokenize(){
         //     std::cout << "Number Added: " + word + "\n";
         // }
 
-        nameVector.resize(nameVector.size() + 1);
-        nameVector[nameVector.size() - 1] = word;
-        tokenVector.resize(nameVector.size());
+        tokenVector.resize(tokenVector.size() + 1);
         auto it = reserved_instruction_terminal_map.find(word); 
         if (it != reserved_instruction_terminal_map.end()){
             tokens_t t = it->second;
@@ -177,7 +179,7 @@ token_t* parser_t::tokenizer_t::tokenize(){
         word = readNextWord(file);
         word.erase(std::remove_if(word.begin(), word.end(), isSpace), word.end());
     }
-    return 0;
+    return tokenVector;
 }
 
 

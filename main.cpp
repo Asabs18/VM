@@ -26,7 +26,4 @@ int main(int argc, char* argv[]) {
     #pragma message("***\n*** Undefined main()\n***\n")
     assert(false);
 #endif // _UT_
-
-parser_t parser("push pop add");
-parser.parse();
 }
