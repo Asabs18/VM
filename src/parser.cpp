@@ -104,12 +104,15 @@ bool isSpace(unsigned char c) {
 		c == '\t' || c == '\v' || c == '\f');
 }
 
+
+//TODO: change readNextWord
 std::string parser_t::tokenizer_t::readNextWord(std::stringstream& file){
     char c;
     int letterCount = 0;
     std::vector<char> wordVector = {' ',' ',' ',' ',' ',' ',' ',' '};
     
     while (file.get(c)){
+//TODO: check for isWhiteSpace call
         if(letterCount == LETTER_COUNT || isSpace(c)){
             wordVector.resize(letterCount);
             break;
@@ -127,8 +130,7 @@ std::string parser_t::tokenizer_t::readNextWord(std::stringstream& file){
 std::vector<token_t*> parser_t::tokenizer_t::tokenize(){
     std::stringstream file("push pop sub add function fn sub 10 15");
     std::string word = readNextWord(file);
-    std::vector<std::string> nameVector = {};
-    std::vector<token_t*> tokenVector = {};
+    std::vector<token_t*> tokenVector;
 
     bool run = true;
     while (run) {

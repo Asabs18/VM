@@ -9,24 +9,33 @@ struct instruction_t {
 };
 
 class parser_t {
+#if defined( _UT_) 
+    public:
+#else
     private:
+#endif // (_UT_)
         using parser_value = std::variant<instruction_t, eof_t>;
         parser_value _value;
         size_t _line_number;
         size_t _char_index;
-
         class tokenizer_t {
-            tokenizer_t(std::ifstream file_stream);
-            tokenizer_t(std::stringstream string_stream);
+            public:
+                tokenizer_t(std::istream& stream) : _stream(stream) {};
 
-            std::vector<token_t*> tokenize();
-            std::string readNextWord(std::stringstream& file);
+            private:
+                std::istream& _stream;
+                std::vector<token_t*> tokenize();
+                std::string readNextWord(std::stringstream& file);
         };
+
+        tokenizer_t* _tokenizer;
 
     public:
         parser_t(std::string file_name) {};
         parser_t(std::ifstream file_stream);
-        parser_t(std::stringstream string_stream);
+        parser_t(std::stringstream string_stream){
+            _tokenizer = new tokenizer_t(string_stream);
+        }
 
         //The Big 5:
         parser_t() = delete;
