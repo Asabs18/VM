@@ -12,13 +12,13 @@
 #define TOKEN(prefix, token)        \
     { #token, tokens_t::prefix##_##token }
 
-instruction_t* parser_t::parse(std::vector<token_t*> token){
-    switch(token){
-        case 
-    }
+// instruction_t* parser_t::parse(std::vector<token_t*> token){
+//     switch(token){
+//         case 
+//     }
 
-    return nullptr;
-}
+//     return nullptr;
+// }
 
 
 //======================= Tokenizer =========================
