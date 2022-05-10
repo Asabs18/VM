@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <cassert>
 
-
+//TODO: Handle Comments
 
 #define TOKEN(prefix, token)        \
     { #token, tokens_t::prefix##_##token }
@@ -23,16 +23,7 @@
 
 //======================= Tokenizer =========================
 
-
-#define LETTER_COUNT 8
-
-void print(std::vector <char> const &a) {
-   std::cout << "The vector elements are : ";
-
-   for(int i=0; i < a.size(); i++)
-   std::cout << a.at(i) << ' ';
-}
-
+//TODO: Change helper functions to use token map instead of .compare calls
 bool isValidTokenMA(std::string word){
     bool isValidToken = false;
     if(word.compare("push") == 0 || word.compare("pop") == 0){
@@ -40,6 +31,7 @@ bool isValidTokenMA(std::string word){
     }
     return isValidToken;
 }
+
 
 bool isValidTokenAL(std::string word){
     bool isValidToken = false;
@@ -51,6 +43,7 @@ bool isValidTokenAL(std::string word){
     return isValidToken;
 }
 
+
 bool isValidTokenBR(std::string word){
     bool isValidToken = false;
     if(word.compare("label") == 0 || word.compare("goto") == 0 || word.compare("if-goto") == 0){
@@ -58,6 +51,7 @@ bool isValidTokenBR(std::string word){
     }
     return isValidToken;
 }
+
 
 bool isValidTokenFN(std::string word){
     bool isValidToken = false;
@@ -67,30 +61,23 @@ bool isValidTokenFN(std::string word){
     return isValidToken;
 }
 
+
 bool isValidToken(std::string word){
     bool isValidToken = false;
-    if(isValidTokenMA(word) || isValidTokenAL(word) || isValidTokenBR(word) || isValidTokenFN(word)){
+    if(isValidTokenMA(word) || isValidTokenAL(word) || isValidTokenBR(word) || isValidTokenFN(word)){ // Check each helper function for valid next word
         isValidToken = true;
     }
     return isValidToken;
 }
 
 
-bool isNumber(const std::string& str)
-{
+bool isNumber(const std::string& str){
     for (char const &c : str) {
-        if (std::isdigit(c) == 0) return false;
+        if (std::isdigit(c) == 0) return false; //Return false if any part of the string isn't a digit
     }
     return true;
 }
 
-std::string readLastWord(std::vector<std::string> nameVector){
-    std::string lastWord = "None";
-    if (nameVector.size() > 0){
-        lastWord = nameVector[nameVector.size() - 1];
-    }
-    return lastWord; 
-}
 
 bool isFnName(std::string word, std::string lastWord){
     bool isFnName = false;
@@ -100,89 +87,69 @@ bool isFnName(std::string word, std::string lastWord){
     return isFnName;
 }
 
-bool isSpace(unsigned char c) {
+
+bool isSpace(unsigned char c){ //Checks for whitespace (Can use isspace from standard but may need isSpace for word.erase(see ln 125)) 
 	return (c == ' ' || c == '\n' || c == '\r' ||
 		c == '\t' || c == '\v' || c == '\f');
 }
 
 
-//TODO: change readNextWord
 std::string parser_t::tokenizer_t::readNextWord(std::stringstream& file){
+    std::vector<char> wordVector;
     char c;
-    int letterCount = 0;
-    std::vector<char> wordVector = {' ',' ',' ',' ',' ',' ',' ',' '};
     
-    while (file.get(c)){
-//TODO: check for isWhiteSpace call
-        if(letterCount == LETTER_COUNT || isSpace(c)){
-            wordVector.resize(letterCount);
-            break;
+    while (file.get(c)){ //Read from the stringstream one letter at a time
+        if(isSpace(c) == false){ //Add each letter to the word if it is not a whitespace character
+            wordVector[wordVector.size()] = c;
+            wordVector.resize(wordVector.size() + 1);
         }
-        else{
-            wordVector[letterCount] = c;
-            letterCount++;
+        else{ //Stop adding to wordVector if a whitespace character is found
+            std::string wordString(wordVector.begin(), wordVector.end());
+            return wordString; 
         }
     }
-    
-    std::string wordString(wordVector.begin(), wordVector.end());
-    return wordString; 
 }
 
-std::vector<token_t*> parser_t::tokenizer_t::tokenize(){
+
+std::string readLastWord(std::stringstream& file){ //TODO: Fix readLastWord
+    std::string lastWord;
+    if (nameVector.size() > 0){
+        lastWord = nameVector[nameVector.size() - 1];
+    }
+    return lastWord; 
+}
+
+
+token_t* parser_t::tokenizer_t::tokenize(){
     std::stringstream file("push pop sub add function fn sub 10 15");
     std::string word = readNextWord(file);
-    std::vector<token_t*> tokenVector;
+    word.erase(std::remove_if(word.begin(), word.end(), isSpace), word.end()); //Remove any whitespace characters from word
+    token_t returnToken;
 
-    bool run = true;
-    while (run) {
-        if (file.eof()){ run = false; }
-        // if(isValidToken(word)){
-        //     nameVector.resize(nameVector.size() + 1);
-        //     nameVector[nameVector.size() - 1] = word;
-        //     tokenVector.resize(nameVector.size());
-        //     auto it = reserved_instruction_terminal_map.find(word); 
-        //     assert(it != reserved_instruction_terminal_map.end());
-        //     tokens_t t = it->second;
-        //     tokenVector[tokenVector.size() - 1] = new token_t(t);
-        //     std::cout << "Token Added: " + word + "\n";
-        // }
-        // else if(isNumber(word) == false){
-        //     if(isFnName(word, readLastWord(nameVector))){
-        //         nameVector.resize(nameVector.size() + 1);
-        //         nameVector[nameVector.size() - 1] = word;
-        //         tokenVector.resize(nameVector.size());
-        //         std::cout << "Function Name Added: " + word + "\n";
-
-        //         nameVector.resize(nameVector.size() + 1);
-        //         nameVector[nameVector.size() - 1] = word;
-        //         tokenVector.resize(nameVector.size());
-        //         auto it = reserved_instruction_terminal_map.find(word); 
-        //         assert(it != reserved_instruction_terminal_map.end());
-        //         tokens_t t = it->second;
-        //         tokenVector[tokenVector.size() - 1] = new token_t(t);
-        //         std::cout << "Token Added: " + word + "\n";
-        //     }
-        //     else{
-        //         nameVector[nameVector.size() - 1] = word;
-        //         std::cout << "Label Added: " + word + "\n";
-        //     }
-        // }
-        // else {
-        //     nameVector[nameVector.size() - 1] = word;
-        //     std::cout << "Number Added: " + word + "\n";
-        // }
-
-        tokenVector.resize(tokenVector.size() + 1);
-        auto it = reserved_instruction_terminal_map.find(word); 
-        if (it != reserved_instruction_terminal_map.end()){
+    auto it = reserved_instruction_terminal_map.find(word); 
+    if (it != reserved_instruction_terminal_map.end()){ //Check if token map returns a valid token
+        if(isValidToken(word)){
             tokens_t t = it->second;
-            tokenVector[tokenVector.size() - 1] = new token_t(t);
-            std::cout << "Token Added: " + word + "\n";
         }
-        word = readNextWord(file);
-        word.erase(std::remove_if(word.begin(), word.end(), isSpace), word.end());
+        else if(isNumber(word) == false){
+            if(isFnName(word, readLastWord(file))){ //HACK: readLastWord currently not working
+                function_name_t t = it->second;
+            }
+            else{
+                label_t t = it->second;
+            }
+        }
+        else{
+            number_t t = it->second;
+        }
+
+        returnToken = new token_t(t); //Create token with correct type
+        std::cout << "Token Added: " + word + "\n";
     }
-    return tokenVector;
+    else{
+        throw "Invalid Token";
+    }
+    return returnToken;
 }
 
 

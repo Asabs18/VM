@@ -24,7 +24,7 @@ class parser_t {
 
             private:
                 std::istream& _stream;
-                std::vector<token_t*> tokenize();
+                token_t* tokenize();
                 std::string readNextWord(std::stringstream& file);
         };
 
