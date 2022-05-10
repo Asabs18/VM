@@ -113,9 +113,9 @@ std::string parser_t::tokenizer_t::readNextWord(std::stringstream& file){
 
 std::string readLastWord(std::stringstream& file){ //TODO: Fix readLastWord
     std::string lastWord;
-    if (nameVector.size() > 0){
-        lastWord = nameVector[nameVector.size() - 1];
-    }
+    // if (nameVector.size() > 0){
+    //     lastWord = nameVector[nameVector.size() - 1];
+    // }
     return lastWord; 
 }
 
@@ -124,7 +124,7 @@ token_t* parser_t::tokenizer_t::tokenize(){
     std::stringstream file("push pop sub add function fn sub 10 15");
     std::string word = readNextWord(file);
     word.erase(std::remove_if(word.begin(), word.end(), isSpace), word.end()); //Remove any whitespace characters from word
-    token_t returnToken;
+    token_t* returnToken;
 
     auto it = reserved_instruction_terminal_map.find(word); 
     if (it != reserved_instruction_terminal_map.end()){ //Check if token map returns a valid token
@@ -133,16 +133,17 @@ token_t* parser_t::tokenizer_t::tokenize(){
         }
         else if(isNumber(word) == false){
             if(isFnName(word, readLastWord(file))){ //HACK: readLastWord currently not working
-                function_name_t t = it->second;
+                //function_name_t t = it->second;
             }
             else{
-                label_t t = it->second;
+                //label_t t = it->second;
             }
         }
         else{
-            number_t t = it->second;
+            //number_t t = it->second;
         }
 
+        number_t t; //HACK: just here to get rid of error
         returnToken = new token_t(t); //Create token with correct type
         std::cout << "Token Added: " + word + "\n";
     }
