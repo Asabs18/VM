@@ -95,19 +95,20 @@ bool isSpace(unsigned char c){ //Checks for whitespace (Can use isspace from sta
 
 
 std::string parser_t::tokenizer_t::readNextWord(std::stringstream& file){
-    std::vector<char> wordVector;
-    char c;
+    // std::vector<char> wordVector;
+    // char c;
     
-    while (file.get(c)){ //Read from the stringstream one letter at a time
-        if(isSpace(c) == false){ //Add each letter to the word if it is not a whitespace character
-            wordVector[wordVector.size()] = c;
-            wordVector.resize(wordVector.size() + 1);
-        }
-        else{ //Stop adding to wordVector if a whitespace character is found
-            std::string wordString(wordVector.begin(), wordVector.end());
-            return wordString; 
-        }
-    }
+    // while (file.get(c)){ //Read from the stringstream one letter at a time
+    //     if(isSpace(c) == false){ //Add each letter to the word if it is not a whitespace character
+    //         wordVector[wordVector.size()] = c;
+    //         wordVector.resize(wordVector.size() + 1);
+    //     }
+    //     else{ //Stop adding to wordVector if a whitespace character is found
+    //         std::string wordString(wordVector.begin(), wordVector.end());
+    //         return wordString; 
+    //     }
+    // }
+    return "NOT WORKING";
 }
 
 

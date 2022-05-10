@@ -33,9 +33,9 @@ class parser_t {
     public:
         parser_t(std::string file_name) {};
         parser_t(std::ifstream file_stream);
-        parser_t(std::stringstream string_stream){
-            _tokenizer = new tokenizer_t(string_stream);
-        }
+        // parser_t(std::stringstream string_stream){ //TODO: Fix constructors for correct types
+        //     _tokenizer = new tokenizer_t(string_stream);
+        // }
 
         //The Big 5:
         parser_t() = delete;
