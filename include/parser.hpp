@@ -19,13 +19,15 @@ class parser_t {
         parser_value _value;
         size_t _line_number;
         size_t _char_index;
+
+    public: //HACK: DELETE THIS LINE, TOKENIZER ONLY PUBLIC FOR TESTING PURPOSES
         class tokenizer_t {
             public:
                 tokenizer_t(std::istream& stream) : _stream(stream) {};
+                token_t* tokenize();
 
             private:
                 std::istream& _stream;
-                token_t* tokenize();
                 std::string readNextWord(std::stringstream& file);
         };
 
@@ -34,10 +36,10 @@ class parser_t {
     public:
         parser_t(std::string file_name) {};
         parser_t(std::ifstream file_stream);
-        parser_t(std::stringstream& string_stream){ //TODO: Fix constructors for correct types
-            std::istream& temp(string_stream);
-            _tokenizer = new tokenizer_t(std::istream&{string_stream});
-        }
+        // parser_t(std::stringstream& string_stream){ //TODO: Fix constructors for correct types
+        //     std::istream& temp(string_stream);
+        //     _tokenizer = new tokenizer_t(std::istream&{string_stream});
+        // }
 
 // [function with an istream& parameter C++ - Stack Overflow](https://stackoverflow.com/questions/21492119/function-with-an-istream-parameter-c)
 

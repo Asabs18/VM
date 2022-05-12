@@ -5,19 +5,18 @@
 #include "../include/token.hpp"
 
 static MunitResult
-tokenizeReturnsCorrectToken1(const MunitParameter params[], void* data) {
+tokenizeReturnsValidToken1(const MunitParameter params[], void* data) {
     //Arrange
 	std::stringstream file("push pop sub add function fn sub 10 15");
-	//parser_t parser = new parser_t(file); //HACK: PARSER_BROKEN 
+	parser_t* parser(file);
 	 
 	//Act
-	//token_t token = tokenizer->tokenize();
+	token_t* token = parser->_tokenizer->tokenize();
 
 	//Assert
-	//munit_assert(token.get_token() == TOKEN(ma, push, push));
+	munit_assert_true(token->is_token());
     return MUNIT_SKIP;
 }
-
 
 //declares the test suite to run each test in this file
 MunitTest token_t_tests[] = {
