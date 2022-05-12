@@ -2,6 +2,7 @@
 #include "lookup.hpp"
 #include "token.hpp"
 #include <string>
+#include <istream>
 
 struct instruction_t {
     std::string instruction;
@@ -33,9 +34,16 @@ class parser_t {
     public:
         parser_t(std::string file_name) {};
         parser_t(std::ifstream file_stream);
-        // parser_t(std::stringstream string_stream){ //TODO: Fix constructors for correct types
-        //     _tokenizer = new tokenizer_t(string_stream);
-        // }
+        parser_t(std::stringstream& string_stream){ //TODO: Fix constructors for correct types
+            std::istream& temp(string_stream);
+            _tokenizer = new tokenizer_t(std::istream&{string_stream});
+        }
+
+// [function with an istream& parameter C++ - Stack Overflow](https://stackoverflow.com/questions/21492119/function-with-an-istream-parameter-c)
+
+// [c++ - Is it possible to pass a stringstream as a function parameter? - Stack Overflow](https://stackoverflow.com/questions/10833188/is-it-possible-to-pass-a-stringstream-as-a-function-parameter)
+// [c++ - How to assign istringstream and ifstream to an istream variable? - Stack Overflow](https://stackoverflow.com/questions/38798133/how-to-assign-istringstream-and-ifstream-to-an-istream-variable)
+
 
         //The Big 5:
         parser_t() = delete;

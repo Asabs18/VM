@@ -125,27 +125,25 @@ token_t* parser_t::tokenizer_t::tokenize(){
     std::stringstream file("push pop sub add function fn sub 10 15");
     std::string word = readNextWord(file);
     word.erase(std::remove_if(word.begin(), word.end(), isSpace), word.end()); //Remove any whitespace characters from word
-    token_t* returnToken;
+    token_t* returnToken = nullptr;
 
     auto it = reserved_instruction_terminal_map.find(word); 
     if (it != reserved_instruction_terminal_map.end()){ //Check if token map returns a valid token
         if(isValidToken(word)){
-            tokens_t t = it->second;
+            returnToken = new token_t(it->second);
         }
         else if(isNumber(word) == false){
             if(isFnName(word, readLastWord(file))){ //HACK: readLastWord currently not working
-                //function_name_t t = it->second;
+                returnToken = new token_t(function_name_t{word});
             }
             else{
-                //label_t t = it->second;
+                returnToken = new token_t(label_t{word});
             }
         }
         else{
-            //number_t t = it->second;
+            returnToken = new token_t(number_t{static_cast<uint16_t>(std::atoi(word.c_str()))});
         }
-
-        number_t t; //HACK: just here to get rid of error
-        returnToken = new token_t(t); //Create token with correct type
+        
         std::cout << "Token Added: " + word + "\n";
     }
     else{
